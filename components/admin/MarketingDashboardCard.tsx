@@ -1845,7 +1845,7 @@ export default function MarketingDashboardCard({
         { campaign_id: 'CMP-001', name: 'Market Oracle → VerifyForge', description: 'Cross-sell testing platform to stock users', campaign_type: 'cross_sell', status: 'active', impressions: 45000, clicks: 1800, conversions: 156, revenue: 4680, ctr: 4.0, conversion_rate: 8.7, roas: 2.4, target_apps: ['market-oracle'], spend: 1950, created_at: '2025-11-01', updated_at: '2025-11-25' },
         { campaign_id: 'CMP-002', name: 'Legalease → Builder', description: 'Cross-sell document builder', campaign_type: 'cross_sell', status: 'active', impressions: 32000, clicks: 1120, conversions: 89, revenue: 2670, ctr: 3.5, conversion_rate: 7.9, roas: 2.1, target_apps: ['legalease'], spend: 1270, created_at: '2025-11-05', updated_at: '2025-11-24' },
         { campaign_id: 'CMP-003', name: 'Holiday Special Banner', description: 'Third-party holiday promotion', campaign_type: 'third_party', status: 'active', impressions: 78000, clicks: 2340, conversions: 187, revenue: 5610, ctr: 3.0, conversion_rate: 8.0, roas: 1.8, target_apps: [], spend: 3120, created_at: '2025-11-15', updated_at: '2025-11-25' },
-        { campaign_id: 'CMP-004', name: 'CTA Button Test', description: 'Testing button colors', campaign_type: 'ab_test', status: 'running', impressions: 12000, clicks: 480, conversions: 42, revenue: 1260, ctr: 4.0, conversion_rate: 8.75, roas: 2.5, target_apps: [], spend: 500, created_at: '2025-11-20', updated_at: '2025-11-25' },
+        { campaign_id: 'CMP-004', name: 'CTA Button Test', description: 'Testing button colors', campaign_type: 'ab_test', status: 'active', impressions: 12000, clicks: 480, conversions: 42, revenue: 1260, ctr: 4.0, conversion_rate: 8.75, roas: 2.5, target_apps: [], spend: 500, created_at: '2025-11-20', updated_at: '2025-11-25' },
       ]);
       
       // Mock apps
@@ -2139,3 +2139,4 @@ export default function MarketingDashboardCard({
     </div>
   );
 }
+
