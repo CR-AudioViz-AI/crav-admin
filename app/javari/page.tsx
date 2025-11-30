@@ -1,7 +1,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { createClient } from '@/lib/supabase/client';
+import { createBrowserClient } from '@supabase/ssr';
+
+// Create supabase client for browser
+const supabase = createBrowserClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
 
 export default function JavariAdminDashboard() {
   const [stats, setStats] = useState<any>(null);
@@ -15,8 +21,6 @@ export default function JavariAdminDashboard() {
   const [feedTopic, setFeedTopic] = useState('');
   const [feedText, setFeedText] = useState('');
   const [feedResult, setFeedResult] = useState('');
-  
-  const supabase = createClient();
 
   useEffect(() => {
     loadData();
@@ -25,39 +29,43 @@ export default function JavariAdminDashboard() {
   async function loadData() {
     setLoading(true);
     
-    // Load stats
-    const { data: statsData } = await supabase
-      .from('admin_knowledge_overview')
-      .select('*')
-      .single();
-    setStats(statsData);
+    try {
+      // Load stats
+      const { data: statsData } = await supabase
+        .from('admin_knowledge_overview')
+        .select('*')
+        .single();
+      setStats(statsData);
 
-    // Load sources
-    const { data: sourcesData } = await supabase
-      .from('knowledge_sources')
-      .select('*')
-      .order('priority', { ascending: false });
-    setSources(sourcesData || []);
+      // Load sources
+      const { data: sourcesData } = await supabase
+        .from('knowledge_sources')
+        .select('*')
+        .order('priority', { ascending: false });
+      setSources(sourcesData || []);
 
-    // Load apps
-    const { data: appsData } = await supabase
-      .from('admin_app_health')
-      .select('*');
-    setApps(appsData || []);
+      // Load apps
+      const { data: appsData } = await supabase
+        .from('admin_app_health')
+        .select('*');
+      setApps(appsData || []);
 
-    // Load bots
-    const { data: botsData } = await supabase
-      .from('admin_bot_status')
-      .select('*');
-    setBots(botsData || []);
+      // Load bots
+      const { data: botsData } = await supabase
+        .from('admin_bot_status')
+        .select('*');
+      setBots(botsData || []);
 
-    // Load recent knowledge
-    const { data: knowledgeData } = await supabase
-      .from('javari_knowledge')
-      .select('*')
-      .order('created_at', { ascending: false })
-      .limit(50);
-    setKnowledge(knowledgeData || []);
+      // Load recent knowledge
+      const { data: knowledgeData } = await supabase
+        .from('javari_knowledge')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(50);
+      setKnowledge(knowledgeData || []);
+    } catch (error) {
+      console.error('Error loading data:', error);
+    }
 
     setLoading(false);
   }
@@ -65,7 +73,7 @@ export default function JavariAdminDashboard() {
   async function handleFeed() {
     setFeedResult('Processing...');
     try {
-      const res = await fetch('/api/admin/javari/feed', {
+      const res = await fetch('/api/javari/feed', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -226,7 +234,7 @@ export default function JavariAdminDashboard() {
                 </span>
               </div>
               {app.production_url && (
-                <a href={app.production_url} target="_blank" className="text-blue-400 text-sm hover:underline block mt-2">
+                <a href={app.production_url} target="_blank" rel="noopener noreferrer" className="text-blue-400 text-sm hover:underline block mt-2">
                   {app.production_url}
                 </a>
               )}
