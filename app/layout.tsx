@@ -1,4 +1,4 @@
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import Script from 'next/script';
 import { Inter } from "next/font/google"
 import "./globals.css"
@@ -10,6 +10,15 @@ export const metadata: Metadata = {
   description: "Complete business operations management system",
 }
 
+// Mobile viewport configuration
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  viewportFit: 'cover',
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -17,7 +26,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}        {/* Javari AI Assistant */}
+      <head>
+        {/* Prevent iOS zoom on input focus */}
+        <meta name="format-detection" content="telephone=no" />
+      </head>
+      <body className={`${inter.className} min-h-screen min-h-[100dvh]`}>
+        {children}
+        {/* Javari AI Assistant */}
         <Script src="https://javariai.com/embed.js" strategy="lazyOnload" />
       </body>
     </html>
