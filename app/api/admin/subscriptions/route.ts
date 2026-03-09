@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
 // Authorization check
 function isAuthorized(request: Request): boolean {
   // TODO: Implement proper admin auth check
